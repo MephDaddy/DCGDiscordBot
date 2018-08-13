@@ -1,1 +1,1 @@
-"# DCGDiscordBot" 
+# DCGDiscordBot
