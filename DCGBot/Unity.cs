@@ -1,4 +1,5 @@
-﻿using DCGBot.Storage;
+﻿using DCGBot.Discord;
+using DCGBot.Storage;
 using DCGBot.Storage.Implementations;
 using System;
 using System.Collections.Generic;
@@ -27,6 +28,8 @@ namespace DCGBot
         {
             _container = new UnityContainer();
             _container.RegisterType<IDataStorage, InMemoryStorage>(new ContainerControlledLifetimeManager());
+            _container.RegisterType<ILogger, Logger>(new ContainerControlledLifetimeManager());
+            _container.RegisterType<Connection>(new ContainerControlledLifetimeManager());
         }
 
         public static T Resolve<T>()
