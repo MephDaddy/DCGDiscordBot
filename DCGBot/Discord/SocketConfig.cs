@@ -15,5 +15,10 @@ namespace DCGBot.Discord
                 LogLevel = LogSeverity.Verbose
             };
         }
+
+        public static DiscordSocketConfig GetNew()
+        {
+            return new DiscordSocketConfig();
+        }
     }
 }

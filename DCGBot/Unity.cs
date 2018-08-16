@@ -1,11 +1,9 @@
 ﻿using DCGBot.Discord;
 using DCGBot.Storage;
 using DCGBot.Storage.Implementations;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using Discord.WebSocket;
 using Unity;
-using Unity.Lifetime;
+using Unity.Injection;
 using Unity.Resolution;
 
 namespace DCGBot
@@ -27,9 +25,11 @@ namespace DCGBot
         public static void RegisterTypes()
         {
             _container = new UnityContainer();
-            _container.RegisterType<IDataStorage, InMemoryStorage>(new ContainerControlledLifetimeManager());
-            _container.RegisterType<ILogger, Logger>(new ContainerControlledLifetimeManager());
-            _container.RegisterType<Connection>(new ContainerControlledLifetimeManager());
+            _container.RegisterSingleton<IDataStorage, JsonStorage>();
+            _container.RegisterSingleton<ILogger, Logger>();
+            _container.RegisterType<DiscordSocketConfig>(new InjectionFactory(i => SocketConfig.GetDefault()));
+            _container.RegisterSingleton<DiscordSocketClient>(new InjectionConstructor(typeof(DiscordSocketConfig)));
+            _container.RegisterSingleton<Connection>();
         }
 
         public static T Resolve<T>()
